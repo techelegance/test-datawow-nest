@@ -9,7 +9,7 @@ async function main() {
     },
     update: {},
     create: {
-      name: "Prisma Adds",
+      name: "Prisma",
       email: "test@gmail.com",
     },
   });

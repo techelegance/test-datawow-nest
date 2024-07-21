@@ -32,9 +32,9 @@ model Post {
   title     String
   content   String?
   published Boolean?  @default(true)
-  author    User?     @relation(fields: [authorId], references: [id])
+  author    User?     @relation(fields: [authorId], references: [id], onDelete: Restrict, onUpdate: Restrict)
   authorId  Int?
-  group     Group?    @relation(fields: [groupId], references: [id])
+  group     Group?    @relation(fields: [groupId], references: [id], onDelete: Restrict, onUpdate: Restrict)
   groupId   Int?
   comments  Comment[]
   createdAt DateTime? @default(now())
@@ -43,9 +43,9 @@ model Post {
 model Comment {
   id      Int    @id @default(autoincrement())
   message String
-  post    Post   @relation(fields: [postId], references: [id])
+  post    Post   @relation(fields: [postId], references: [id], onDelete: Restrict, onUpdate: Restrict)
   postId  Int
-  user    User?  @relation(fields: [userId], references: [id])
+  user    User?  @relation(fields: [userId], references: [id], onDelete: Restrict, onUpdate: Restrict)
   userId  Int
   createdAt DateTime? @default(now())
 }
