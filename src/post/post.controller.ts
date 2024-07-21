@@ -12,13 +12,16 @@ import { PostService } from "./post.service";
 // import { UserService } from "src/user/user.service";
 import { Post as PostModel, User as UserModel } from "@prisma/client";
 import { ApiCreatedResponse, ApiOkResponse, ApiTags } from "@nestjs/swagger";
-import { AuthGuard } from "src/auth/auth.guard";
+import { AuthGuard } from "../auth/auth.guard";
+import { CreatePostDto } from "./dto/create-post.dto";
+import { UpdatePostDto } from "./dto/update-group.dto";
+import { CommentService } from "../comment/comment.service";
 
 @ApiTags("Post")
 @Controller("post")
 export class PostController {
   constructor(
-    // private readonly userService: UserService,
+    private readonly commentService: CommentService,
     private readonly postService: PostService
   ) {}
 
@@ -45,12 +48,7 @@ export class PostController {
   @Post()
   async createDraft(
     @Body()
-    postData: {
-      title: string;
-      content?: string;
-      authorId: string;
-      groupId: number;
-    }
+    postData: CreatePostDto
   ): Promise<PostModel> {
     const { title, content, authorId, groupId } = postData;
     return this.postService.createPost({
@@ -70,11 +68,7 @@ export class PostController {
   update(
     @Param("id") id: string,
     @Body()
-    postData: {
-      title: string;
-      content?: string;
-      groupId: number;
-    }
+    postData: UpdatePostDto
   ) {
     return this.postService.update({
       where: { id: Number(id) },
@@ -84,7 +78,8 @@ export class PostController {
 
   @UseGuards(AuthGuard)
   @Delete(":id")
-  async deletePost(@Param("id") id: string): Promise<PostModel> {
+  async deletePost(@Param("id") id: string): Promise<any> {
+    await this.commentService.deleteComments({ postId: Number(id) });
     return this.postService.deletePost({ id: Number(id) });
   }
 }
