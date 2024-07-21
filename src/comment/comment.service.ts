@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { Comment, Prisma } from "@prisma/client";
-import { PrismaService } from "src/prisma/prisma.service";
+import { PrismaService } from "../prisma/prisma.service";
 
 @Injectable()
 export class CommentService {
@@ -24,8 +24,8 @@ export class CommentService {
     return `This action updates a #${id} comment`;
   }
 
-  async remove(where: any): Promise<Comment> {
-    return this.prisma.comment.delete({
+  async deleteComments(where: any): Promise<any> {
+    return this.prisma.comment.deleteMany({
       where,
     });
   }

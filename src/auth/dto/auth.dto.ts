@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 
-export class CreateGroupDto {
+export class AuthDto {
   @ApiProperty()
-  title: string;
+  email: string;
 }
