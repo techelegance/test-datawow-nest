@@ -3,14 +3,14 @@
 ```bash
 #ติดตั้ง database
 $ cd db
-$ sudo docker comepose up -d
+$ docker comepose up -d
 $ cd ../
 
 #ติดตั้ง package
 $ yarn install
 
 #รันเพื่อเริ่มต้นการใช้งาน Prisma Migrate กับฐานข้อมูล
-$ sudo npx prisma migrate dev --name "init"
+$ npx prisma migrate dev --name "init"
 
 #รันเพื่อการ seeding ข้อมูล ลงในฐานข้อมูล โดยใช้ Prisma ORM
 $ npx prisma db seed
